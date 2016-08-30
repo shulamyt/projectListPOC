@@ -21,4 +21,4 @@ var createdServer = server.listen(3000, function () {
 
 });
 
-require('./server/rest/userRest')(server);
+require('./server/rest/projectRest')(server);
