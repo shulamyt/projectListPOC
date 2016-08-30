@@ -8,20 +8,17 @@ module.exports = {
 			{
 				id: "1",
 				name: "p1",
-				type: "ciq",
-				status: "NOT_STARTED"
-			},
-			{
-				id: "2",
-				name: "p2",
-				type: "ciq",
-				status: "NOT_STARTED"
-			},
-			{
-				id: "3",
-				name: "p3",
-				type: "ciq",
-				status: "NOT_STARTED"
+				status:{
+					code: "",
+					decode: ""
+				},
+				location:{
+					
+				},
+				type:"ciq",		
+				stage:{},
+				completionDate:{},
+				action:{}
 			}
 		];
 		return res.json(projects);   
