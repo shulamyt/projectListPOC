@@ -10,14 +10,25 @@ const configuration = {
 
 		// },
 		name: {
-			label: "Name"
+			label: "Name",
+			fieldNames: ["name"],
+			view: "text"
 		},
-		type:{
-			label: "Type"
-		},
-		stages:{
-			label: "Stages"
-		},
+
+		// nameAndLocation: {
+		// 	label: "Name And Location",
+		// 	fields: ["name", "location"],
+		// 	view: "nameAndLocation"
+		// },
+
+		// type:{
+		// 	label: "Type"
+		// 	field: "type"
+		// },
+		// stages:{
+		// 	label: "Stages"
+		// 	field: "stages"
+		// },
 		// completionDate:{},
 		// action:{}
 	}
