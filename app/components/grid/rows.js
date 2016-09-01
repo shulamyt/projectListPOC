@@ -1,29 +1,24 @@
 import React from 'react';
-import Text from './column/textColumn';
+import * as CellViewFactory from './cell/cellViewFactory' ;
 
 class Rows extends React.Component {
-	getRowView(){
-
+	
+	generateCellKey(rowData, columnConfig){
+		return rowData.id + '_' + columnConfig.id;
 	}
 
 	render() {
-		var rows = this.props.data.map((item) => {
+		var rows = this.props.data.map((rowData) => {
 			var columnsConfig = this.props.configuration.columns;
 			var columnsIds = Object.keys(columnsConfig);
-			var row = columnsIds.map((id) => {
-				let columnConfig = columnsConfig[id];
-				let viewData = {};
-				for(var i in columnConfig.fieldNames){
-					var field = columnConfig.fieldNames[i];
-					viewData[field] = item[field];
-				};
-				if(columnConfig.view === 'text'){
-					return <td>
-								<Text data={viewData} configuration={columnConfig}/>
-							</td>;
-				}
+			var row = columnsIds.map((columnId) => {
+				let columnConfig = columnsConfig[columnId];
+				columnConfig['id'] = columnId;
+				var CellView = CellViewFactory.getCellView(columnConfig);
+				var cellKey = this.generateCellKey(rowData, columnConfig);
+				return <td key={cellKey}><CellView data = {rowData} config = {columnConfig}/></td>;
 			});
-			return <tr key = {item.id}>{row}</tr>
+			return <tr key={rowData.id}>{row}</tr>;
 		});
 		return (
 			<tbody>

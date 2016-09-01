@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --bail",
     "start": "node start_server.js",
-    "start_dev_server": "node webpack.dev.server.js"
+    "start_dev": "node webpack.dev.server.js"
   },
   "repository": {
     "type": "git",

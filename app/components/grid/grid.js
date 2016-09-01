@@ -7,8 +7,8 @@ class Grid extends React.Component {
 	render() {
 		return (
 			<table>
-				<Header configuration={this.props.configuration}/>
-				<Rows data={this.props.data} configuration={this.props.configuration}/>
+				<Header config={this.props.config}/>
+				<Rows data={this.props.data} config={this.props.config}/>
 			</table>
 		);
 	}
