@@ -6,10 +6,12 @@ class Grid extends React.Component {
 
 	render() {
 		return (
-			<table>
-				<Header config={this.props.config}/>
-				<Rows data={this.props.data} config={this.props.config}/>
-			</table>
+			<div className="grid">
+				<table>
+					<Header config={this.props.config}/>
+					<Rows data={this.props.data} config={this.props.config}/>
+				</table>
+			</div>
 		);
 	}
 }

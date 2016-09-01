@@ -20,11 +20,12 @@
   "homepage": "https://github.com/shulamyt/projectListPOC#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "classnames": "^2.2.5",
     "express": "^4.14.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1"
   },
-  "devDependencies": { 
+  "devDependencies": {
     "babel-core": "^6.2.4",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-assign": "^6.8.0",

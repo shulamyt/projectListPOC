@@ -1,0 +1,39 @@
+table {
+	/*table-layout: fixed;*/
+	/*width: 0;*/
+	border-collapse: collapse;
+	/*border-spacing: 0;*/
+	border: 1px solid #e3e3e3;
+	/*position: relative;*/
+}
+
+.grid{
+	font-family: "Segoe UI","Segoe UI Web Regular","Segoe UI Symbol",Arial;
+}
+
+
+thead {
+	background-color: #69c8c8;
+	/*padding: 10px 0;*/
+}
+
+th {
+	font-size: 16px;
+	/*text-transform: none;*/
+	/*color: #2f3538;*/
+	/*font-weight: normal;*/
+	font-weight: bold;
+	height: 41px;
+	padding: 0;
+	/*position: relative;*/
+	/*border-width: 1px 0 0 1px;*/
+	border-right: 1px dotted #78c3c3;
+	/*border-left: 1px dotted #fff;*/
+}
+
+td {
+	padding: 18px 10px;
+	/*border-bottom: 1px solid #d4d4d4;*/
+	border: 1px solid #e3e3e3;
+	font-size: 14px;
+}

@@ -1,0 +1,22 @@
+.stages{
+	.stage {
+		width: 10px;
+		height: 10px;
+		moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+		background-color: black;
+		border: solid 1px black;
+		float: left;
+		margin-right: 3px;
+	}
+
+    .NOT_STARTED {background-color: #2f3538; border: solid 1px #2f3538;}
+    .IN_PROGRESS {background-color: black;   border: solid 1px black;}
+    .COMPLETED   {background-color: black;   border: solid 1px black;}
+    .NotStarted  {background-color: #2f3538; border: solid 1px #2f3538;}
+    .InProgress  {background-color: black;   border: solid 1px black;}
+    .Completed   {background-color: black;   border: solid 1px black;}
+    .Skipped     {background-color: black;   border: solid 1px black;}
+    .Optional    {background-color: #2f3538; border: solid 1px #2f3538;}
+}

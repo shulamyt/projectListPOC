@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 
 class Stages extends React.Component {
 	
@@ -21,10 +22,11 @@ class Stages extends React.Component {
 	render() {
 		var mainStageName = this.generateMainStageName();
 		var stages = this.props.data.stages.map((stage) => {
-			return <div key={stage.code} title={stage.name} className={stage.code}></div>;
+			var stageClass = classNames('stage', stage.code);
+			return <div key={stage.code} title={stage.name} className={stageClass}></div>;
 		});
 		return (
-			<div>
+			<div className='stages'>
 				<div>{mainStageName}</div>
 				<div>
 					{stages}
