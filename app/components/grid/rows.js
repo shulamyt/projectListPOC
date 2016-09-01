@@ -9,7 +9,7 @@ class Rows extends React.Component {
 
 	render() {
 		var rows = this.props.data.map((rowData) => {
-			var columnsConfig = this.props.configuration.columns;
+			var columnsConfig = this.props.config.columns;
 			var columnsIds = Object.keys(columnsConfig);
 			var row = columnsIds.map((columnId) => {
 				let columnConfig = columnsConfig[columnId];
