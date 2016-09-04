@@ -8,7 +8,7 @@ class Rows extends React.Component {
 	}
 
 	render() {
-		var rows = this.props.data.map((rowData) => {
+		var rows = this.props.data.length ? this.props.data.map((rowData) => {
 			var columnsConfig = this.props.config.columns;
 			var columnsIds = Object.keys(columnsConfig);
 			var row = columnsIds.map((columnId) => {
@@ -19,7 +19,7 @@ class Rows extends React.Component {
 				return <td key={cellKey}><CellView data = {rowData} config = {columnConfig}/></td>;
 			});
 			return <tr key={rowData.id}>{row}</tr>;
-		});
+		}) : null;
 		return (
 			<tbody>
 				{rows}
