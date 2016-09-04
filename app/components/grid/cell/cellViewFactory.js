@@ -14,4 +14,3 @@ export function getCellView (columnConfig) {
 	}
 	return Type;
 }
-	

@@ -24,7 +24,11 @@ const configuration = {
 		type: {
 			label: "Type",
 			field: "type",
-			view: "text"
+			view: "text",
+			filter:{
+				field: "customReferenceData.allProjectTypes",
+				view: "checkBoxListFilter"
+			}
 		},
 
 		stages: {
