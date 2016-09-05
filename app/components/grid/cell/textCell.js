@@ -1,13 +1,10 @@
 import React from 'react';
+import get from 'lodash/get';
 
 class TextCell extends React.Component {
 	
 	render() {
-		var text = this.props.data;
-		var fields = this.props.config.field.split('.');
-		for(let i in fields){
-			text = text[fields[i]];
-		}
+		var text = get(this.props.data, this.props.config.field);
 		return (
 			<div>{text}</div>
 		);

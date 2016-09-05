@@ -86,12 +86,12 @@ var filters = {
 
 render(projects, configuration, filters);
 
-restService.post('http://illin3278.corp.amdocs.com:31500/dop/services/project/fetchProjects', filters.filterCriterions).then(function(fetchProjects){
+restService.post('/dop/services/project/fetchProjects', filters.filterCriterions).then(function(fetchProjects){
 	projects = fetchProjects.results
 	render(projects, configuration, filters);
 	console.log("firstRender");
 	setTimeout(function(){ 
-		restService.get('http://illin3278.corp.amdocs.com:31500/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
+		restService.get('/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
 			filters.data["customReferenceData"] = customReferenceData;
 			render(projects, configuration, filters);
 			console.log("secondRender");

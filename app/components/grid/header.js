@@ -28,27 +28,22 @@ class Header extends React.Component {
 	}
 
 	hasFilterMetadata(filterConfig){
-		if(isEmpty(this.props.filters) || isEmpty(this.props.filters.data)){
+		if(isEmpty(filterConfig) || isEmpty(this.props.filters) || isEmpty(this.props.filters.data)){
 			return false;
 		}
 		var data = get(this.props.filters.data, filterConfig.field);
 		return !isEmpty(data);
 	}
 
-	getFilterMenu(columnId) {
-		if(this.isFilterOpen(columnId)){
-			var filterConfig = this.props.config.columns[columnId].filter;
-			if(this.hasFilterMetadata(filterConfig)){
-				var FilterView = FilterFactory.getFilter(filterConfig);
-				return <FilterView config={filterConfig} data={this.props.filters.data}/>;
-			}
+	getFilterMenu(columnId, filterConfig) {
+		if(this.isFilterOpen(columnId)){		
+			var FilterView = FilterFactory.getFilter(filterConfig);
+			return <FilterView config={filterConfig} data={this.props.filters.data}/>;
 		}
 	}
 
-	getFilterButton(columnId, columnConfig) {
-		if(columnConfig.filter){
-			return <div onClick={this.onFilterClick.bind(this, columnId)}>F</div>
-		}
+	getFilterButton(columnId) {
+		return <div onClick={this.onFilterClick.bind(this, columnId)}>F</div>
 	}
 
 	render() {
@@ -57,8 +52,11 @@ class Header extends React.Component {
 		
 		var headers = columnsIds.map((columnId) => {
 			let columnConfig = columnsConfig[columnId];
-			var filterButton = this.getFilterButton(columnId, columnConfig);
-			var filterMenu = this.getFilterMenu(columnId);
+			var filterConfig = columnConfig.filter;
+			if(this.hasFilterMetadata(filterConfig)){
+				var filterButton = this.getFilterButton(columnId);
+				var filterMenu = this.getFilterMenu(columnId, filterConfig);
+			}
 			return(
 				<th key = {columnId}>
 					<div>{columnConfig.label}</div>
