@@ -2,3 +2,16 @@
 @import "common";
 @import "components";
 @import "buisness/buisness";
+
+body{
+    margin: 0px;
+}
+
+.header{
+	background-color: #dfd6c7;
+	height: 70px;
+	line-height: 70px;
+	font-family: "Segoe UI","Segoe UI Web Regular","Segoe UI Symbol",Arial;
+	font-size: 27px;
+    text-transform: uppercase;
+}

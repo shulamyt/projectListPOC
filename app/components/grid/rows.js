@@ -1,5 +1,6 @@
 import React from 'react';
-import * as CellViewFactory from './cell/cellViewFactory' ;
+import * as CellViewFactory from './cell/cellViewFactory';
+import isEmpty from 'lodash/isEmpty';
 
 class Rows extends React.Component {
 	
@@ -8,6 +9,9 @@ class Rows extends React.Component {
 	}
 
 	render() {
+		if(isEmpty(this.props.data)){
+			return null;
+		}
 		var rows = this.props.data.length ? this.props.data.map((rowData) => {
 			var columnsConfig = this.props.config.columns;
 			var columnsIds = Object.keys(columnsConfig);

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import isEmpty from 'lodash/isEmpty';
+
 class CheckBoxList extends React.Component {
 
 	constructor(props) {
@@ -38,6 +40,9 @@ class CheckBoxList extends React.Component {
 	}
 
 	render() {
+		if(isEmpty(this.props.items)){
+			return null;
+		}
 		var valueField = this.props.config.valueField;
 		var labelField = this.props.config.labelField;
 		var checkBoxList = this.props.items.map ((item, index) => {

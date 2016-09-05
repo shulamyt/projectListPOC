@@ -1,5 +1,8 @@
 import React from 'react';
 import * as FilterFactory from './filter/filterFactory';
+import isEmpty from 'lodash/isEmpty';
+import get from 'lodash/get';
+
 
 class Header extends React.Component {
 
@@ -25,16 +28,11 @@ class Header extends React.Component {
 	}
 
 	hasFilterMetadata(filterConfig){
-		if(!this.props.filters){
+		if(isEmpty(this.props.filters) || isEmpty(this.props.filters.data)){
 			return false;
 		}
-		var data = this.props.filters.data;
-
-		var fields = filterConfig.field.split('.');
-		for(let i in fields){
-			data = data[fields[i]];
-		}
-		return true;
+		var data = get(this.props.filters.data, filterConfig.field);
+		return !isEmpty(data);
 	}
 
 	getFilterMenu(columnId) {
