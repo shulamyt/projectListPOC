@@ -15,7 +15,7 @@ class CheckBoxListFilter extends React.Component {
 		}
 		var selectedItems = [];
 		return (
-			<div>
+			<div className="filterMenu">
 				{/*<input type="text" value={this.state.value} onChange={this.handleChange}/>*/}
 				<CheckBoxList items={items} selectedItems={selectedItems} config={config}/>
 			</div>
