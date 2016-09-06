@@ -1,3 +1,4 @@
+import React from 'react';
 import CheckBoxListFilter from './checkBoxListFilter';
 
 export function getFilter (filterConfig) {

@@ -8,9 +8,19 @@ class Header extends React.Component {
 
 	constructor(props) {
 		super(props);
+		this.filterViews = [];
 		this.state = {
 			openFilterColumnId: undefined
 		};
+	}
+
+	onCriterionChange(){
+		console.log('criterionChange');
+		this.filterViews.forEach((filterView)=>filterView.getCriterion());
+	}
+
+	addFilterView(filterView){
+		this.filterViews.push(filterView);
 	}
 
 	onFilterClick(columnId){
@@ -38,7 +48,7 @@ class Header extends React.Component {
 	getFilterMenu(columnId, filterConfig) {
 		if(this.isFilterOpen(columnId)){		
 			var FilterView = FilterFactory.getFilter(filterConfig);
-			return <FilterView config={filterConfig} data={this.props.filters.data}/>;
+			return <FilterView ref={(filterView) => this.addFilterView(filterView)} config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this)}/>;
 		}
 	}
 
