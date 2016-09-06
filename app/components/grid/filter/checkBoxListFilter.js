@@ -4,11 +4,15 @@ import CheckBoxList from './../../checkBoxList/checkBoxList';
 import filter from 'lodash/filter';
 import get from 'lodash/get';
 import isEmpty from 'lodash/isEmpty';
+import map from 'lodash/map';
 
 class CheckBoxListFilter extends Filter {
 	
 	constructor(props) {
 		super(props);
+		// console.log("this.props.filterCriterion = " + this.props.filterCriterion.criterionValues);
+		// var map(this.props.filterCriterion.criterionValues, 'value');
+		// _.map(users, 'id');
 		this.state = {
 			filterItems: undefined
 		};
@@ -16,30 +20,6 @@ class CheckBoxListFilter extends Filter {
 
 	isFilterChanged(){
 		return true;
-	}
-
-	getFilterCriterion(){
-
-		// {
-		// 	"filterCriterions":[
-		// 		{
-		// 			"fieldName":"type",
-		// 			"type":"string",
-		// 			"operator":"in",
-		// 			"logicalRelation":null,
-		// 			"criterionValue":null,
-		// 			"criterionValues":[
-		// 				{
-		// 					"@type":".StringFilterCriterionValue",
-		// 					"value":"A2A_Scenario3_Profile1"
-		// 				},
-		// 				{
-		// 					"@type":".StringFilterCriterionValue",
-		// 					"value":"A2A_Scenario3_Profile2"
-		// 				}
-		// 			]
-		// 		}
-		// 	],"sortCriterions":[{"fieldName":"name","direction":"ASCENDING"}],"pagingCriterion":{"pageStart":0,"pageSize":25},"options":[],"results":null,"dynamicAttributes":["PROJECT_NAME","ProjDtls.Addr","ProjDtls.City","ProjDtls.St"],"listCount":0}
 	}
 
 	createCriterionValues(selectedItems){
@@ -92,6 +72,9 @@ class CheckBoxListFilter extends Filter {
 		var items = get(this.props.data, this.props.config.field);
 		items = this.filterItems(items);
 		var selectedItems = [];
+		if(this.props.filterCriterion){
+			selectedItems = map(this.props.filterCriterion.criterionValues, 'value');
+		}
 		return (
 			<div className="filterMenu">
 				<input type="text" value={this.state.filterItems} onChange={this.handleFilterItemsChange.bind(this)}/>

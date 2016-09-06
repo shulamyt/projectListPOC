@@ -2,6 +2,7 @@ import React from 'react';
 import * as FilterFactory from './filter/filterFactory';
 import isEmpty from 'lodash/isEmpty';
 import get from 'lodash/get';
+import find from 'lodash/find';
 
 
 class Header extends React.Component {
@@ -54,7 +55,8 @@ class Header extends React.Component {
 	getFilterMenu(columnId, filterConfig) {
 		if(this.isFilterOpen(columnId)){		
 			var FilterView = FilterFactory.getFilter(filterConfig);
-			return <FilterView config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this, columnId)}/>;
+			var filterCriterion = find(this.props.filters.filterCriterions.filterCriterions, {"fieldName":columnId});
+			return <FilterView config={filterConfig} data={this.props.filters.data} filterCriterion={filterCriterion} onFilterChange={this.onCriterionChange.bind(this, columnId)}/>;
 		}
 	}
 

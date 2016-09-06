@@ -6,8 +6,18 @@ class CheckBoxList extends React.Component {
 
 	constructor(props) {
 		super(props);
+		var selectedItems = [];
+		for(let i=0; i<props.selectedItems.length; i++){
+			var selectedItem = props.selectedItems[i];
+			var selectedItemIndex = this.props.items.findIndex(function(element, index, array){
+				return element.code == selectedItem;
+			});
+			if(selectedItemIndex > -1){
+				selectedItems.push(selectedItemIndex);
+			}
+		}
 		this.state = {
-			selectedItems:[]
+			"selectedItems": selectedItems
 		};
 	}
 
