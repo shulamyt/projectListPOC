@@ -24,17 +24,23 @@ class CheckBoxListFilter extends Filter {
     	this.setState({filterItems: event.target.value});
   	}
 
+  	filterItems(items){
+  		var filteredItems = items;
+  		if(!isEmpty(this.state.filterItems)){
+			filteredItems = filter(items, (item) => {
+				return item["decode"].indexOf(this.state.filterItems) !== -1;
+			});
+		}
+		return filteredItems;
+  	}
+
 	render() {
 		var config = {
 			"valueField" : "code",
 			"labelField" : "decode"
 		}
 		var items = get(this.props.data, this.props.config.field);
-		if(!isEmpty(this.state.filterItems)){
-			items = filter(items, (item) => {
-				return item["decode"].indexOf(this.state.filterItems) !== -1;
-			});
-		}
+		items = this.filterItems(items);
 		var selectedItems = [];
 		return (
 			<div className="filterMenu">
