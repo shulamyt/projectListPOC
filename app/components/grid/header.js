@@ -8,33 +8,38 @@ class Header extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.filterViews = [];
 		this.state = {
 			openFilterColumnId: undefined
 		};
 	}
 
-	onCriterionChange(){
-		console.log('criterionChange');
-		this.filterViews.forEach((filterView)=>filterView.getCriterion());
+	onCriterionChange(columnId, criterion){
+		this.closeOpenFilter();
+		this.props.onCriterionChange(columnId, criterion);
 	}
 
-	addFilterView(filterView){
-		this.filterViews.push(filterView);
+	closeOpenFilter(){
+		this.setState({'openFilterColumnId': undefined});
 	}
 
-	onFilterClick(columnId){
-		console.log(this.state.openFilterColumnId);
-		var openFilterColumnId = this.state.openFilterColumnId;
-		if(openFilterColumnId == columnId){
-			this.setState({'openFilterColumnId': undefined});
-		}else{
-			this.setState({'openFilterColumnId': columnId});
-		}
+	openFilter(columnId){
+		this.setState({'openFilterColumnId': columnId});
 	}
 
 	isFilterOpen(columnId){
 		return this.state.openFilterColumnId == columnId;
+	}
+
+	toggleFilter(columnId){
+		if(this.isFilterOpen(columnId)){
+			this.closeOpenFilter();
+		}else{
+			this.openFilter(columnId);
+		}
+	}
+
+	onFilterClick(columnId){
+		this.toggleFilter(columnId);
 	}
 
 	hasFilterMetadata(filterConfig){
@@ -48,7 +53,7 @@ class Header extends React.Component {
 	getFilterMenu(columnId, filterConfig) {
 		if(this.isFilterOpen(columnId)){		
 			var FilterView = FilterFactory.getFilter(filterConfig);
-			return <FilterView ref={(filterView) => this.addFilterView(filterView)} config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this)}/>;
+			return <FilterView config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this)}/>;
 		}
 	}
 
