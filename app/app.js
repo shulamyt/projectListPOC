@@ -124,13 +124,13 @@ var fetchProjects = function(){
 		projects = fetchProjects.results
 		render(projects, configuration, filters);
 		console.log("firstRender");
-		setTimeout(function(){ 
+		//setTimeout(function(){ 
 			restService.get('/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
 				filters.data["customReferenceData"] = customReferenceData;
 				render(projects, configuration, filters);
 				console.log("secondRender");
 			});
-		}, 3000);
+		//}, 3000);
 	});
 };
 
