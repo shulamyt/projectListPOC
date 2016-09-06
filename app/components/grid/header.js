@@ -51,7 +51,7 @@ class Header extends React.Component {
 		var columnsIds = Object.keys(columnsConfig);
 		
 		var headers = columnsIds.map((columnId) => {
-			let columnConfig = columnsConfig[columnId];
+			var columnConfig = columnsConfig[columnId];
 			var filterConfig = columnConfig.filter;
 			if(this.hasFilterMetadata(filterConfig)){
 				var filterButton = this.getFilterButton(columnId);

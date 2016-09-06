@@ -62,9 +62,9 @@ const configuration = {
 	}
 };
 
-const render = function(projects, configuration, customReferenceData){
+const render = function(projects, configuration, filters){
 	return ReactDOM.render(
-		<Grid data={projects} config={configuration} filters={customReferenceData}/>,
+		<Grid data={projects} config={configuration} filters={filters}/>,
 		document.getElementById('grid')
 	);
 };
