@@ -61,7 +61,7 @@ class Header extends React.Component {
 	}
 
 	getFilterButton(columnId) {
-		return <div onClick={this.onFilterClick.bind(this, columnId)}>F</div>
+		return <div className="filterIcon" onClick={this.onFilterClick.bind(this, columnId)}>F</div>
 	}
 
 	render() {
