@@ -75,8 +75,11 @@ class Header extends React.Component {
 				var filterButton = this.getFilterButton(columnId);
 				var filterMenu = this.getFilterMenu(columnId, filterConfig);
 			}
+			var style = {
+				width: columnConfig.width
+			};
 			return(
-				<th key = {columnId}>
+				<th style={style} key = {columnId}>
 					<div>{columnConfig.label}</div>
 					{filterButton}
 					{filterMenu}

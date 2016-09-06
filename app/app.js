@@ -14,19 +14,22 @@ const configuration = {
 		status: {
 			label: "Status",
 			field: "status.decode",
-			view: "text"
+			view: "text",
+			width: "278px"
 		},
 
 		name: {
 			label: "Name",
 			field: "name",
-			view: "text"
+			view: "text",
+			width: "251px"
 		},
 
 		type: {
 			label: "Type",
 			field: "type",
 			view: "text",
+			width: "479px",
 			filter:{
 				field: "customReferenceData.allProjectTypes",
 				view: "checkBoxListFilter"
@@ -36,13 +39,15 @@ const configuration = {
 		stages: {
 			label: "Stages",
 			field: "stages",
-			view: Stages,
+			width: "466px",
+			view: Stages
 		},
 
 		completionDate: {
 			label: "Completion Date",
 			field: "currentEstimatedDate",
-			view: "date"
+			view: "date",
+			width: "397px"
 		}
 
 		// nameAndLocation: {
