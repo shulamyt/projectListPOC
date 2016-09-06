@@ -14,9 +14,59 @@ class CheckBoxListFilter extends Filter {
 		};
 	}
 
+	isFilterChanged(){
+		return true;
+	}
+
+	getFilterCriterion(){
+
+		// {
+		// 	"filterCriterions":[
+		// 		{
+		// 			"fieldName":"type",
+		// 			"type":"string",
+		// 			"operator":"in",
+		// 			"logicalRelation":null,
+		// 			"criterionValue":null,
+		// 			"criterionValues":[
+		// 				{
+		// 					"@type":".StringFilterCriterionValue",
+		// 					"value":"A2A_Scenario3_Profile1"
+		// 				},
+		// 				{
+		// 					"@type":".StringFilterCriterionValue",
+		// 					"value":"A2A_Scenario3_Profile2"
+		// 				}
+		// 			]
+		// 		}
+		// 	],"sortCriterions":[{"fieldName":"name","direction":"ASCENDING"}],"pagingCriterion":{"pageStart":0,"pageSize":25},"options":[],"results":null,"dynamicAttributes":["PROJECT_NAME","ProjDtls.Addr","ProjDtls.City","ProjDtls.St"],"listCount":0}
+	}
+
+	createCriterionValues(selectedItems){
+		var criterionValues = [];
+		selectedItems.forEach((item)=>{
+			let criterion = {
+				"@type" : ".StringFilterCriterionValue",
+				"value" : item.code
+			};
+			criterionValues.push(criterion);
+		})
+		return criterionValues;
+	}
+
 	clickOk(){
-		if(this.filterChanged()){
-			this.props.onFilterChange();
+		if(this.isFilterChanged()){
+			console.log(this._checkBoxList);
+			var selectedItems = this._checkBoxList.getSelectedItems();
+			var criterionValues = this.createCriterionValues(selectedItems);
+			var criterion = {
+				"type":"string",
+				"operator":"in",
+				"logicalRelation":null,
+				"criterionValue":null,
+				"criterionValues":criterionValues
+			};
+			this.props.onFilterChange(criterion);
 		}
 	}
 
@@ -45,8 +95,8 @@ class CheckBoxListFilter extends Filter {
 		return (
 			<div className="filterMenu">
 				<input type="text" value={this.state.filterItems} onChange={this.handleFilterItemsChange.bind(this)}/>
-				<CheckBoxList items={items} selectedItems={selectedItems} config={config}/>
-				<div onClick={this.clickOk}>OK</div>
+				<CheckBoxList ref={(checkBoxList) => this._checkBoxList = checkBoxList} items={items} selectedItems={selectedItems} config={config}/>
+				<div onClick={this.clickOk.bind(this)}>OK</div>
 			</div>
 		);
 	}

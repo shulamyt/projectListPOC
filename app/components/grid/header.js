@@ -15,6 +15,7 @@ class Header extends React.Component {
 
 	onCriterionChange(columnId, criterion){
 		this.closeOpenFilter();
+		criterion["fieldName"] = columnId;
 		this.props.onCriterionChange(columnId, criterion);
 	}
 
@@ -53,7 +54,7 @@ class Header extends React.Component {
 	getFilterMenu(columnId, filterConfig) {
 		if(this.isFilterOpen(columnId)){		
 			var FilterView = FilterFactory.getFilter(filterConfig);
-			return <FilterView config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this)}/>;
+			return <FilterView config={filterConfig} data={this.props.filters.data} onFilterChange={this.onCriterionChange.bind(this, columnId)}/>;
 		}
 	}
 

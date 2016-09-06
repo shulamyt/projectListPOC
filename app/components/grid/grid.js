@@ -8,7 +8,7 @@ class Grid extends React.Component {
 		return (
 			<div className="grid">
 				<table>
-					<Header config={this.props.config} filters={this.props.filters}/>
+					<Header config={this.props.config} filters={this.props.filters} onCriterionChange={this.props.onCriterionChange}/>
 					<Rows data={this.props.data} config={this.props.config}/>
 				</table>
 			</div>
