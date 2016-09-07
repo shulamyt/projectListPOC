@@ -22,9 +22,9 @@
 		/*color: #2f3538;*/
 		/*font-weight: normal;*/
 		font-weight: bold;
-		height: 41px;
+		height: 43px;
 		padding: 0;
-		/*position: relative;*/
+		position: relative;
 		/*border-width: 1px 0 0 1px;*/
 		border-right: 1px dotted #78c3c3;
 		/*border-left: 1px dotted #fff;*/
@@ -42,5 +42,11 @@
 		height: 200px;
 		overflow: auto;
 		background-color: white;
+	}
+
+	.filterIcon{
+		position: absolute;
+		top: 11px;
+		right: 15px;
 	}
 }

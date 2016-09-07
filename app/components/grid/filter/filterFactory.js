@@ -1,4 +1,3 @@
-import React from 'react';
 import CheckBoxListFilter from './checkBoxListFilter';
 import NameFilter from './nameFilter'
 

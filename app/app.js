@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import * as restService from './service/restService';
 import Grid from './components/grid/grid';
 import './res/scss/main.scss';
+import remove from 'lodash/remove';
+
 
 import Stages from './buisness/stages/stages' ;
 
@@ -12,7 +14,8 @@ const configuration = {
 		status: {
 			label: "Status",
 			field: "status.decode",
-			view: "text"
+			view: "text",
+			width: "278px"
 		},
 
 		name: {
@@ -22,12 +25,14 @@ const configuration = {
 			filter: {
 				view:"nameFilter"
 			}
+			width: "251px"
 		},
 
 		type: {
 			label: "Type",
 			field: "type",
 			view: "text",
+			width: "479px",
 			filter:{
 				field: "customReferenceData.allProjectTypes",
 				view: "checkBoxListFilter"
@@ -37,13 +42,15 @@ const configuration = {
 		stages: {
 			label: "Stages",
 			field: "stages",
-			view: Stages,
+			width: "466px",
+			view: Stages
 		},
 
 		completionDate: {
 			label: "Completion Date",
 			field: "currentEstimatedDate",
-			view: "date"
+			view: "date",
+			width: "397px"
 		}
 
 		// nameAndLocation: {
@@ -65,21 +72,54 @@ const configuration = {
 	}
 };
 
+var onCriterionChange = function(columnId, criterion){
+	console.log(columnId);
+	console.log(criterion);
+	remove(filters.filterCriterions.filterCriterions, function(criterion) {
+	  return criterion.fieldName == columnId;
+	});
+	filters.filterCriterions.filterCriterions.push(criterion);
+	fetchProjects();
+}
+
 const render = function(projects, configuration, filters){
 	return ReactDOM.render(
-		<Grid data={projects} config={configuration} filters={filters}/>,
+		<Grid data={projects} config={configuration} filters={filters} onCriterionChange={onCriterionChange}/>,
 		document.getElementById('grid')
 	);
 };
 
-// const render = fucntion(projects, configuration, customReferenceData){
-// 	// return ReactDOM.render(
-// 	// 	<Grid data={projects.results} config={configuration} filters={customReferenceData}/>,
-// 	// 	document.getElementById('grid')
-// 	// );
-// }
-
-var predefineFilters = {"filterCriterions":[{"fieldName":"status","type":"string","operator":"in","logicalRelation":null,"criterionValue":null,"criterionValues":[{"@type":".StringFilterCriterionValue","value":"AIN ERROR"},{"@type":".StringFilterCriterionValue","value":"CIN PROGRESS"},{"@type":".StringFilterCriterionValue","value":"BNOT STARTED"},{"@type":".StringFilterCriterionValue","value":"CDRELEASE IN PROGRESS"},{"@type":".StringFilterCriterionValue","value":"ECANCEL IN PROGRESS"}]}],"sortCriterions":[{"fieldName":"name","direction":"ASCENDING"}],"pagingCriterion":{"pageStart":0,"pageSize":25},"options":[],"results":null,"dynamicAttributes":["PROJECT_NAME","ProjDtls.Addr","ProjDtls.City","ProjDtls.St"]};
+var predefineFilters = {
+	"filterCriterions":[
+		// {
+		// 	"fieldName":"status",
+		// 	"type":"string",
+		// 	"operator":"in",
+		// 	"logicalRelation":null,
+		// 	"criterionValue":null,
+		// 	"criterionValues":[
+		// 		{
+		// 			"@type":".StringFilterCriterionValue",
+		// 			"value":"AIN ERROR"
+		// 		},
+		// 		{
+		// 			"@type":".StringFilterCriterionValue",
+		// 			"value":"CIN PROGRESS"
+		// 		},
+		// 		{
+		// 			"@type":".StringFilterCriterionValue",
+		// 			"value":"BNOT STARTED"
+		// 		},{
+		// 			"@type":".StringFilterCriterionValue",
+		// 			"value":"CDRELEASE IN PROGRESS"
+		// 		},{
+		// 			"@type":".StringFilterCriterionValue",
+		// 			"value":"ECANCEL IN PROGRESS"
+		// 		}
+		// 	]
+		// }
+	],
+	"sortCriterions":[{"fieldName":"name","direction":"ASCENDING"}],"pagingCriterion":{"pageStart":0,"pageSize":25},"options":[],"results":null,"dynamicAttributes":["PROJECT_NAME","ProjDtls.Addr","ProjDtls.City","ProjDtls.St"]};
 var projects = {};
 var filters = {
 	data: {},
@@ -87,7 +127,20 @@ var filters = {
 };
 
 
-render(projects, configuration, filters);
+var fetchProjects = function(){
+	restService.post('/dop/services/project/fetchProjects', filters.filterCriterions).then(function(fetchProjects){
+		projects = fetchProjects.results
+		render(projects, configuration, filters);
+		console.log("firstRender");
+		//setTimeout(function(){ 
+			restService.get('/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
+				filters.data["customReferenceData"] = customReferenceData;
+				render(projects, configuration, filters);
+				console.log("secondRender");
+			});
+		//}, 3000);
+	});
+};
 
 restService.post('/dop/services/project/fetchProjects', filters.filterCriterions).then(function(fetchProjects){
 	projects = fetchProjects.results
@@ -101,3 +154,5 @@ restService.post('/dop/services/project/fetchProjects', filters.filterCriterions
 	});
 	
 });
+render(projects, configuration, filters);
+fetchProjects();

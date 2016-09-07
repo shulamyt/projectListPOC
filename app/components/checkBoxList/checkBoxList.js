@@ -6,9 +6,29 @@ class CheckBoxList extends React.Component {
 
 	constructor(props) {
 		super(props);
+		var selectedItems = [];
+		for(let i=0; i<props.selectedItems.length; i++){
+			var selectedItem = props.selectedItems[i];
+			var selectedItemIndex = this.props.items.findIndex(function(element, index, array){
+				return element.code == selectedItem;
+			});
+			if(selectedItemIndex > -1){
+				selectedItems.push(selectedItemIndex);
+			}
+		}
 		this.state = {
-			selectedItems:[]
+			"selectedItems": selectedItems
 		};
+	}
+
+	getSelectedItems(){
+		var selectedItems = [];
+		for(let i=0; i<this.props.items.length; i++){
+			if(this.state.selectedItems.indexOf(i) > -1){
+				selectedItems.push(this.props.items[i]);
+			}
+		}
+		return selectedItems;
 	}
 
 	reset() {
@@ -25,7 +45,7 @@ class CheckBoxList extends React.Component {
 
 	handleItemChange(index) {
 		var selectedItems = this.state.selectedItems;
-		var indexof = selectedItems.indexof(index);
+		var indexof = selectedItems.indexOf(index);
 		if(indexof > -1){
 			selectedItems.splice(indexof, 1);
 		}
@@ -46,10 +66,11 @@ class CheckBoxList extends React.Component {
 		var valueField = this.props.config.valueField;
 		var labelField = this.props.config.labelField;
 		var checkBoxList = this.props.items.map ((item, index) => {
+			var isChecked = this.state.selectedItems.indexOf(index) > -1;
 			return (
 				<div key={index}>
 					<label>
-						<input type="checkbox" value={item[valueField]} onChange={this.handleItemChange.bind(this, index)} checked={item.checked ? true : false}/>
+						<input type="checkbox" value={item[valueField]} onChange={this.handleItemChange.bind(this, index)} checked={isChecked}/>
 						{item[labelField]}
 					</label>
 				</div>
