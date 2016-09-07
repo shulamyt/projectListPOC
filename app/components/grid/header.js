@@ -38,8 +38,12 @@ class Header extends React.Component {
 	}
 
 	hasFilterMetadata(filterConfig){
-		if(isEmpty(filterConfig) || isEmpty(this.props.filters) || isEmpty(this.props.filters.data)){
+
+		if(isEmpty(filterConfig) || isEmpty(this.props.filters) ){//|| isEmpty(this.props.filters.data)){
 			return false;
+		}
+		if(isEmpty(filterConfig.field)){
+			return true;
 		}
 		var data = get(this.props.filters.data, filterConfig.field);
 		return !isEmpty(data);
