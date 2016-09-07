@@ -18,7 +18,10 @@ const configuration = {
 		name: {
 			label: "Name",
 			field: "name",
-			view: "text"
+			view: "text",
+			filter: {
+				view:"nameFilter"
+			}
 		},
 
 		type: {
@@ -90,11 +93,11 @@ restService.post('/dop/services/project/fetchProjects', filters.filterCriterions
 	projects = fetchProjects.results
 	render(projects, configuration, filters);
 	console.log("firstRender");
-	setTimeout(function(){ 
-		restService.get('/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
-			filters.data["customReferenceData"] = customReferenceData;
-			render(projects, configuration, filters);
-			console.log("secondRender");
-		});
-	}, 3000);
+	
+	restService.get('/dop/services/ReferenceData/CustomReferenceData').then(function(customReferenceData){
+		filters.data["customReferenceData"] = customReferenceData;
+		render(projects, configuration, filters);
+		console.log("secondRender");
+	});
+	
 });
