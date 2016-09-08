@@ -1,77 +1,94 @@
 import React from 'react';
 
 import isEmpty from 'lodash/isEmpty';
+import find from 'lodash/find';
+import remove from 'lodash/remove';
 
 class CheckBoxList extends React.Component {
+	
+	propTypes: {
+		idField: React.PropTypes.element.isRequired,
+		labelField: React.PropTypes.element.isRequired,
+		items: React.PropTypes.element.isRequired,
+		initSelectedItems: React.PropTypes.array,
+		initSelectedItemsIDs: React.PropTypes.array,
+		onChange: React.PropTypes.func
+	}
 
 	constructor(props) {
 		super(props);
-		var selectedItems = [];
-		for(let i=0; i<props.selectedItems.length; i++){
-			var selectedItem = props.selectedItems[i];
-			var selectedItemIndex = this.props.items.findIndex(function(element, index, array){
-				return element.code == selectedItem;
-			});
-			if(selectedItemIndex > -1){
-				selectedItems.push(selectedItemIndex);
-			}
-		}
 		this.state = {
-			"selectedItems": selectedItems
+			"selectedItems": this.getInitSelectedItems(props)
 		};
 	}
 
-	getSelectedItems(){
-		var selectedItems = [];
-		for(let i=0; i<this.props.items.length; i++){
-			if(this.state.selectedItems.indexOf(i) > -1){
-				selectedItems.push(this.props.items[i]);
-			}
+	getInitSelectedItems(props){
+		if(!isEmpty(props.initSelectedItems)){
+			return props.initSelectedItems;
 		}
-		return selectedItems;
+		else if(!isEmpty(props.initSelectedItemsIDs)){
+			var initSelectedItems = [];
+			props.initSelectedItemsIDs.forEach(function(id){
+				var findMe = {};
+				findMe[props.idField] = id;
+				initSelectedItems.push(find(props.items, findMe));
+			});
+			return initSelectedItems;
+		}
+		return [];
 	}
 
-	reset() {
-		this.setState({selectedItems:[]});
+	getSelectedItems(){
+		return this.state.selectedItems;
 	}
-	
-	checkAll() {
-		var selectedItems = [];
-		for(let i in this.props.items){
-			selectedItems.push(i);
-		}
+
+	setSelectedItems(selectedItems){
 		this.setState({'selectedItems':selectedItems});
 	}
 
-	handleItemChange(index) {
-		var selectedItems = this.state.selectedItems;
-		var indexof = selectedItems.indexOf(index);
-		if(indexof > -1){
-			selectedItems.splice(indexof, 1);
-		}
-		else{
-			selectedItems.push(index);
-		}
-		this.setState({'selectedItems': selectedItems});
+	reset() {
+		this.setSelectedItems([]);
+	}
+	
+	checkAll() {
+		this.setSelectedItems(this.props.items);
+	}
 
-		if(this.props.onChange) {
-			this.props.onChange(selectedValues);
+	onCheckedChange(item) {
+		var selectedItems = this.state.selectedItems;
+		if(this.isChecked(item)){
+			remove(selectedItems, (removeItem) => {
+				return removeItem[this.props.idField] == item[this.props.idField];
+			});
+		}else{
+			selectedItems.push(item);
 		}
+		this.setSelectedItems(selectedItems);
+		if(this.props.onChange) {
+			this.props.onChange(checkedItems);
+		}
+	}
+
+	findItem(item, items){
+		var findMe = {};
+		findMe[this.props.idField] = item[this.props.idField];
+		return find(items, findMe);
+	}
+
+	isChecked(item){
+		return this.findItem(item, this.state.selectedItems);
 	}
 
 	render() {
 		if(isEmpty(this.props.items)){
 			return null;
 		}
-		var valueField = this.props.config.valueField;
-		var labelField = this.props.config.labelField;
-		var checkBoxList = this.props.items.map ((item, index) => {
-			var isChecked = this.state.selectedItems.indexOf(index) > -1;
+		var checkBoxList = this.props.items.map ((item) => {
 			return (
-				<div key={index}>
+				<div key={item[this.props.idField]}>
 					<label>
-						<input type="checkbox" value={item[valueField]} onChange={this.handleItemChange.bind(this, index)} checked={isChecked}/>
-						{item[labelField]}
+						<input type="checkbox" value={item} onChange={this.onCheckedChange.bind(this, item)} checked={this.isChecked(item)}/>
+						{item[this.props.labelField]}
 					</label>
 				</div>
 			);

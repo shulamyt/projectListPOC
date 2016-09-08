@@ -24,7 +24,7 @@ const configuration = {
 			view: "text",
 			filter: {
 				view:"nameFilter"
-			}
+			},
 			width: "251px"
 		},
 

@@ -10,11 +10,8 @@ class CheckBoxListFilter extends Filter {
 	
 	constructor(props) {
 		super(props);
-		// console.log("this.props.filterCriterion = " + this.props.filterCriterion.criterionValues);
-		// var map(this.props.filterCriterion.criterionValues, 'value');
-		// _.map(users, 'id');
 		this.state = {
-			filterItems: undefined
+			"search" : undefined
 		};
 	}
 
@@ -50,35 +47,43 @@ class CheckBoxListFilter extends Filter {
 		}
 	}
 
-	handleFilterItemsChange(event) {
-    	this.setState({filterItems: event.target.value});
+	onSearchChange(event) {
+    	this.setState({"search": event.target.value});
   	}
 
-  	filterItems(items){
+  	applySearch(items){
   		var filteredItems = items;
-  		if(!isEmpty(this.state.filterItems)){
+  		if(!isEmpty(this.state.search)){
 			filteredItems = filter(items, (item) => {
-				return item["decode"].indexOf(this.state.filterItems) !== -1;
+				return item["decode"].indexOf(this.state.search) !== -1;
 			});
 		}
 		return filteredItems;
   	}
 
+  	getCheckListItems(){
+  		var items = get(this.props.data, this.props.config.field);
+		items = this.applySearch(items);
+		return items;
+  	}
+
+  	getInitSelectedItemsIDs(){
+  		if(!isEmpty(this.props.filterCriterion)){
+  			return map(this.props.filterCriterion.criterionValues, 'value');
+  		}
+  	}
+
 	render() {
-		var config = {
-			"valueField" : "code",
-			"labelField" : "decode"
-		}
-		var items = get(this.props.data, this.props.config.field);
-		items = this.filterItems(items);
-		var selectedItems = [];
-		if(this.props.filterCriterion){
-			selectedItems = map(this.props.filterCriterion.criterionValues, 'value');
-		}
 		return (
 			<div className="filterMenu">
-				<input type="text" value={this.state.filterItems} onChange={this.handleFilterItemsChange.bind(this)}/>
-				<CheckBoxList ref={(checkBoxList) => this._checkBoxList = checkBoxList} items={items} selectedItems={selectedItems} config={config}/>
+				<input type="text" value={this.state.search} onChange={this.onSearchChange.bind(this)}/>
+				<CheckBoxList
+					ref={(checkBoxList) => this._checkBoxList = checkBoxList}
+					items={this.getCheckListItems()}
+					initSelectedItemsIDs={this.getInitSelectedItemsIDs()}
+					labelField="decode"
+					idField="code"
+				/>
 				<div onClick={this.clickOk.bind(this)}>OK</div>
 			</div>
 		);
