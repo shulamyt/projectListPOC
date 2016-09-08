@@ -85,15 +85,13 @@ class CheckBoxList extends React.Component {
 		}
 		var checkBoxList = this.props.items.map ((item) => {
 			return (
-				<div key={item[this.props.idField]}>
-					<label>
-						<input type="checkbox" value={item} onChange={this.onCheckedChange.bind(this, item)} checked={this.isChecked(item)}/>
-						{item[this.props.labelField]}
-					</label>
-				</div>
+				<label key={item[this.props.idField]}>
+					<input type="checkbox" value={item} onChange={this.onCheckedChange.bind(this, item)} checked={this.isChecked(item)}/>
+					{item[this.props.labelField]}
+				</label>
 			);
 		});
-		return <div>{checkBoxList}</div>;
+		return <div className="checkBoxList">{checkBoxList}</div>;
 	}
 }
 

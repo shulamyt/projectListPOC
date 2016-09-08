@@ -39,9 +39,33 @@
 
 	.filterMenu{
 		position: absolute;
-		height: 200px;
+		right: 0px;
 		overflow: auto;
-		background-color: white;
+		border-radius: 5px;
+		background-color: #2f3538;
+		color: #fff;
+		font-size: 12px;
+		font-weight: normal;
+		height: 282px;
+		width: 220px;
+
+		.ok{
+			position: absolute;
+			bottom: 0px;
+			height: 30px;
+			background: #7ddddd;
+			color: black;
+			width: 90px;
+			line-height: 30px;
+			margin-bottom: 10px;
+			margin-top: 10px;
+			margin-left: 10px;
+		}
+
+		.serach{
+			margin-top: 20px;
+			margin-bottom: 10px;
+		}
 	}
 
 	.filterIcon{
@@ -49,4 +73,14 @@
 		top: 11px;
 		right: 15px;
 	}
+}
+
+.checkBoxList{
+	height: 179px;
+    overflow-y: auto;
+    width: 100%;
+    overflow-x: hidden;
+    label{
+    	display: block;
+    }
 }

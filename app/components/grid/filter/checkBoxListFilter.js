@@ -76,7 +76,7 @@ class CheckBoxListFilter extends Filter {
 	render() {
 		return (
 			<div className="filterMenu">
-				<input type="text" value={this.state.search} onChange={this.onSearchChange.bind(this)}/>
+				<input className="serach" type="text" value={this.state.search} onChange={this.onSearchChange.bind(this)}/>
 				<CheckBoxList
 					ref={(checkBoxList) => this._checkBoxList = checkBoxList}
 					items={this.getCheckListItems()}
@@ -84,7 +84,7 @@ class CheckBoxListFilter extends Filter {
 					labelField="decode"
 					idField="code"
 				/>
-				<div onClick={this.clickOk.bind(this)}>OK</div>
+				<div className="ok" onClick={this.clickOk.bind(this)}>OK</div>
 			</div>
 		);
 	}
